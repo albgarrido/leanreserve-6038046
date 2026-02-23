@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { validateBooking } from '@/lib/availability';
-import { CreateBookingInput, Booking } from '@/types';
+import { CreateBookingInput } from '@/types';
 
 /**
  * POST /api/bookings
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       .select('id')
       .single();
 
-    if (insertError) {
+    if (insertError || !booking) {
       console.error('Booking insert error:', insertError);
       return NextResponse.json(
         { error: 'Failed to create booking. Please try again.' },
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        bookingId: booking.id,
+        bookingId: (booking as { id: string }).id,
         message: `Your booking for ${guest_count} guest${
           guest_count > 1 ? 's' : ''
         } on ${booking_date} at ${booking_time} is confirmed.`,
