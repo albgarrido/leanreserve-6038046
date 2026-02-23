@@ -18,3 +18,4 @@
 - [x] **Task 2:** Supabase Client Configuration
 - [x] **Task 3:** Availability Logic Utility
 - [x] **Task 4:** Shared UI Components
+- [x] **Task 5:** Public Web Booking Form
