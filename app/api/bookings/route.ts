@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
 import { validateBooking } from '@/lib/availability';
-import { CreateBookingInput } from '@/types';
+import { CreateBookingInput, Booking } from '@/types';
 
 /**
  * POST /api/bookings
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
 
     const { data: booking, error: insertError } = await supabaseAdmin
       .from('bookings')
-      .insert(bookingData)
+      .insert(bookingData as any)
       .select('id')
       .single();
 
